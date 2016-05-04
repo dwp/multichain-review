@@ -1,5 +1,5 @@
 #DLT: GOVERNMENT INTERDEPARTMENTAL MULTICHAIN
-25 APR 2016  
+May 2016  
 BY STEVEN BAKHTIARI, MATT SMITH
 
 ---
@@ -68,7 +68,7 @@ $ curl -i -X POST -d '{"method":"getinfo"}' http://multichainrpc:password@<vm-ip
 
 Note the two different port numbers in the requests above. The Docker Composer configuration forwards these ports to two different containers, each running a MultiChain node.
 
-In addition to making requests directly to the API, MultiChain provides a command line interface to the API. This makes for easy testing and interaction during evaluation. In order to use this, one must ascertain a container ID (in this instance, two containers, master and node) by running `docker ps` and then `docker exec` to run a new shell instance. Now a bash prompt will provide access to MultiChain's commands:
+In addition to making requests directly to the API, MultiChain provides a command line interface to the API. This makes for easy testing and interaction during evaluation. In order to use this, one must ascertain a container ID (in this instance, two containers, master and node) by running `docker ps` and then `docker exec` to run a new shell instance. A bash prompt will now be available, providing access to MultiChain's command line interface:
 
 ```
 $ docker ps
@@ -99,7 +99,7 @@ In the example scenario described in this research pack, a set of nodes could be
 ###The value of mining on a private blockchain
 In public blockchain implementations, it is necessary to enforce diversity in the pool of nodes responsible for building blocks of transactions and adding them to the chain. There are numerous approaches for doing this, the most common of which, used by the Bitcoin blockchain, is known as Proof of Work (PoW). This works by requiring nodes to solve a cryptographic "puzzle", in simple terms, by repeatedly peforming a hash of the candidate block's contents until the resulting hash meets a given criteria. This process is time consuming, computationally expensive, and consequently, costly in real world terms. It is this process that is typically referred to as mining.
 
-In a private blockchain, where the actors are known and authorised, the requirement to perform computationally expensive work in order to build blocks becomes unnecessary; other means of enforcing diversity can be utilised. The current version of BlockChain still maintains a Bitcoin style PoW purely for the purposes of regulating the rate of block production, however, in order to enforce diversity, the the system uses a randomised round-robin algorithm to choose which node can submit the next block.
+In a private blockchain, where the actors are known and authorised, the requirement to perform computationally expensive work in order to build blocks becomes unnecessary; other means of enforcing diversity may be employed. The current version of BlockChain still maintains a Bitcoin style PoW, purely for the purposes of regulating the rate of block production, so in order to enforce diversity, the system uses a randomised round-robin with a configurable diversity value. This value represents the proportion of nodes that would need to collude in order to undermind the network, and so, depending on the value, prevents a node from submitting a new block for inclusion in the chain if it had previously built one of the last *n* blocks.
 
 ###Atomic exchange transactions
 
