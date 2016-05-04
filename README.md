@@ -8,7 +8,7 @@ BY STEVEN BAKHTIARI, MATT SMITH
 MultiChain, a fork of Bitcoin Core, the reference client for the Bitcoin network, is a permissioned blockchain enabling organisations to quickly configure and run a distributed ledger capable of managing digital and native assets. This experiment aims to determine the possibility of using MultiChain to run a government-maintained interdepartmental ledger that could provide value to multiple departments needing access to the same data.
 
 ##Type of deliverable
-**Experiment**.
+TBD
 
 ##Nature of research in this pack
 The insight from this experiment may prove the usefulness of investment in the technology in the medium term, in addition to bigger, wider reaching projects in the long term. It is worth noting that distributed ledger technology is still young, and as such, improvements and new use cases surface regularly.
@@ -47,7 +47,7 @@ This experiment makes use of a cluster configuration provided by software agency
 To start the cluster, navigate to the directory containing the `docker-compose.yml` file and run `docker-compose`.
 
 ```
-$ cd ~/path/to/docker-files
+$ cd ./docker-multichain
 $ docker-compose up
 ```
 After a minute or two, all of the nodes should be up and running.
@@ -83,12 +83,12 @@ MultiChain enables organisations to deploy private, permissioned, fully configur
 
 Permissions may be assigned to nodes covering an array of features including:
 
-* Connecting to the other nodes
+* Connecting
 * Issuing assets
 * Sending assets
 * Receiving assets
 * Mining assets
-* Administering the network
+* Administering the blockchain
 
 Public-key cryptography is used extensively in crytocurrencies and blockchain implementations to manage identities, and the sending and receiving of data between participants. In addition to this, MultiChain also uses cryptography during the handshake when a node attempts to connect to another, ensuring that any node wishing to participate is both known to others by a public key, and that the node is in possession of the private key associated with the public key.
 
@@ -100,6 +100,11 @@ In the example scenario described in this research pack, a set of nodes could be
 In public blockchain implementations, it is necessary to enforce diversity in the pool of nodes responsible for building blocks of transactions and adding them to the chain. There are numerous approaches for doing this, the most common of which, used by the Bitcoin blockchain, is known as Proof of Work (PoW). This works by requiring nodes to solve a cryptographic "puzzle", in simple terms, by repeatedly peforming a hash of the candidate block's contents until the resulting hash meets a given criteria. This process is time consuming, computationally expensive, and consequently, costly in real world terms. It is this process that is typically referred to as mining.
 
 In a private blockchain, where the actors are known and authorised, the requirement to perform computationally expensive work in order to build blocks becomes unnecessary; other means of enforcing diversity may be employed. The current version of BlockChain still maintains a Bitcoin style PoW, purely for the purposes of regulating the rate of block production, so in order to enforce diversity, the system uses a randomised round-robin with a configurable diversity value. This value represents the proportion of nodes that would need to collude in order to undermind the network, and so, depending on the value, prevents a node from submitting a new block for inclusion in the chain if it had previously built one of the last *n* blocks.
+
+###Multiple addresses
+Privacy through anonymity is one of the primary motivations and driving forces behind the development of many open blockchains. The recommendation for users of Bitcoin, for example, is to generate a new private and public keypair (a new address) for each new payment to be received. 
+
+MultiChain allows for the easy creation of multiple addresses per node, and also provides API functions to be able to send and receive assets to and from specific addresses. This, along with the ability to assign permissions on a per-address basis, essentially opens the door to treating addresses as accounts, and fits well with the concept of having an address for each individual being represented in the system i.e. one address for each person in the country.
 
 ###Atomic exchange transactions
 
