@@ -7,14 +7,11 @@ BY STEVEN BAKHTIARI, MATT SMITH
 ##Summary
 MultiChain, a fork of Bitcoin Core, the reference client for the Bitcoin network, is a permissioned blockchain enabling organisations to quickly configure and run a distributed ledger capable of managing digital and native assets. This experiment aims to determine the possibility of using MultiChain to run a government-maintained interdepartmental ledger that could provide value to multiple departments needing access to the same data.
 
-##Type of deliverable
-TBD
-
 ##Nature of research in this pack
 The insight from this experiment may prove the usefulness of investment in the technology in the medium term, in addition to bigger, wider reaching projects in the long term. It is worth noting that distributed ledger technology is still young, and as such, improvements and new use cases surface regularly.
 
 ##Problem
-Various taxes along with national insurance contributions are collected by HMRC, while a variety of benefit payments are distributed by the DWP. When calculating a claimant's entitlement, some benefits take account of an individual's national insurance contributions, and on the inverse, some forms of benefit are liable for tax. At present, HMRC and the DWP exchange information by using copies of spreadsheets and databases. This form of data exchange carries overheads and the potential for error and miscommunication.
+Government departments are often required to exchange information, where frequently, there may be dependencies on the data, impacting day to day operations or decisions being made. Traditional forms of data exchange may carry overheads and the potential for error and miscommunication.
 
 ##Hypothesis
 A MultiChain blockchain can be created to facilitate the sharing of data, improve security while reducing error, fraud, and the reducing the risks and costs associated with the currently employed means of data sharing.  MultiChain offers the following features, making it a platform worthy of consideration:
@@ -42,7 +39,7 @@ $ eval $(docker-machine env multichain-experiments)
 ```
 
 ###Launching the cluster
-This experiment makes use of a cluster configuration provided by software agency, Kunstmaan. Some minor tweaks have been made to accomodate the experiment, and the version supplied with this research pack should be used if following these steps.
+This experiment makes use of a cluster configuration provided by software agency, Kunstmaan. Some minor tweaks have been made to accommodate the experiment, and the version supplied with this research pack should be used if following these steps.
 
 To start the cluster, navigate to the directory containing the `docker-compose.yml` file and run `docker-compose`.
 
@@ -50,6 +47,7 @@ To start the cluster, navigate to the directory containing the `docker-compose.y
 $ cd ./docker-multichain
 $ docker-compose up
 ```
+
 After a minute or two, all of the nodes should be up and running.
 
 ###Interacting with the cluster
@@ -107,9 +105,8 @@ Privacy through anonymity is one of the primary motivations and driving forces b
 MultiChain allows for the easy creation of multiple addresses per node, and also provides API functions to be able to send and receive assets to and from specific addresses. This, along with the ability to assign permissions on a per-address basis, essentially opens the door to treating addresses as accounts, and fits well with the concept of having an address for each individual being represented in the system i.e. one address for each person in the country.
 
 ###Atomic exchange transactions
+Because MultiChain provides the ability to include multiple native assets in one blockchain, as opposed to a single one like the Bitcoin Blockchain, it has added an exchange transaction which swaps some of one asset for some of another. This transaction will be atomic, meaning that the two-way exchange must succeed or fail as a whole (also known as delivery-versus-payment).
 
+Unlike one way transactions, which need only be signed by the sender, an atomic transaction must be signed by all participants involved in the exchange. MultiChain does not currently provide a way to communicate partial transactions over the Blockchain, requiring participants to perform this off-chain.
 
-##Innovation radar update
-
-
-##Innovation gallery
+The process is as follows: a transaction is created identifying a set of outputs and inputs (e.g. Alice creates a transactions stating that £10 will be spent and $15 should be received). This is digitally signed, creating a 'partial transaction', which is then transferred to another participant who can then add their own inputs and outputs, before signing the transaction too. Provided all of the inputs and outputs are balanced, the transaction can then be confirmed on the blockchain.
