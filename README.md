@@ -14,14 +14,7 @@ The insight from this experiment may prove the usefulness of investment in the t
 Government departments are often required to exchange information, where frequently, there may be dependencies on the data, impacting day to day operations or decisions being made. Traditional forms of data exchange may carry overheads and the potential for error and miscommunication.
 
 ##Hypothesis
-A MultiChain blockchain can be created to facilitate the sharing of data, improve security while reducing error, fraud, and the reducing the risks and costs associated with the currently employed means of data sharing.  MultiChain offers the following features, making it a platform worthy of consideration:
-
-* Based on open source software, and soon to be released under a GPLv3 licence
-* Fully permissioned, offering the ability to deploy a private, fully access controlled ledger
-* Uses a randomised round robin approach to forming blocks, rather than relying on proof of work
-* Supports atomic transactions between multiple parties without the need to go off-network
-* Provides a JSON-RPC API to interact with nodes on the network
-* Enables storage of arbitrary data on the blockchain
+A MultiChain blockchain can be created to facilitate the sharing of data, and improving security all while reducing error, fraud, and reducing the risks and costs associated with the currently employed means of data sharing. Having access to shared data will allow government departments to more easily conduct day to day operations and make decisions.
 
 ##Experiment and research proposed
 Run a Docker MultiChain cluster where each node represents a government department capable of reading and writing data that is made immediately available to other departments.
@@ -94,6 +87,10 @@ Such fine grained permissions simplify the process of defining different rights,
 
 In the example scenario described in this research pack, a set of nodes could be managed by the Home Office, holding addresses for each individual in the country. Another set of nodes could be managed by the DWP which records any benefit payments made to those individuals. Likewise, HMRC would record tax liability and tax payments received for said individuals. Where the DWP determine entitlement based on national insurance contributions, or where HMRC adjust tax liability based on benefits paid, the information is all available on the network without each department having to explicitly compile and send the data to each another.
 
+![](./assets/gov-blockchain.png)
+
+All of these nodes combined would form a single government blockchain with multiple writers and multiple readers interested in the information.
+
 ###The value of mining on a private blockchain
 In public blockchain implementations, it is necessary to enforce diversity in the pool of nodes responsible for building blocks of transactions and adding them to the chain. There are numerous approaches for doing this, the most common of which, used by the Bitcoin blockchain, is known as Proof of Work (PoW). This works by requiring nodes to solve a cryptographic "puzzle", in simple terms, by repeatedly peforming a hash of the candidate block's contents until the resulting hash meets a given criteria. This process is time consuming, computationally expensive, and consequently, costly in real world terms. It is this process that is typically referred to as mining.
 
@@ -110,3 +107,14 @@ Because MultiChain provides the ability to include multiple native assets in one
 Unlike one way transactions, which need only be signed by the sender, an atomic transaction must be signed by all participants involved in the exchange. MultiChain does not currently provide a way to communicate partial transactions over the Blockchain, requiring participants to perform this off-chain.
 
 The process is as follows: a transaction is created identifying a set of outputs and inputs (e.g. Alice creates a transactions stating that £10 will be spent and $15 should be received). This is digitally signed, creating a 'partial transaction', which is then transferred to another participant who can then add their own inputs and outputs, before signing the transaction too. Provided all of the inputs and outputs are balanced, the transaction can then be confirmed on the blockchain.
+
+##Key insights
+MultiChain offers a number of features, making it a platform worthy of consideration.
+
+* Based on open source software, and soon to be released under a GPLv3 licence. It's worth noting that it is still in alpha release.
+* Fully permissioned, offering the ability to deploy a private, fully access controlled ledger. MultiChain allows organisations to easily assign different permissions/rights to nodes that are given access to the blockchain.
+* Doesn't rely on Proof of Work as a security mechanism, and instead provides a means of configuring a round-robin selection to prevent nodes from adding a sequential set of blocks to the chain.
+* Supports atomic transactions between multiple participants using partial transactions.
+* Forked from bitcoin-core, MultiChain provides a JSON-RPC API to interact with nodes, and shares many of the same features as Bitcoin.
+* Enables storage of arbitrary data on the blockchain. 
+* The introduction of blockchain technology will provide value most when there are many actors that need to read and write to the system. One example could be HMRC assigning tax liability, DWP assigning benefit liability and then having those tokens returned to HMRC and the DWP once the liability is fulfilled.
