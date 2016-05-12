@@ -25,7 +25,7 @@ The insight from this experiment may prove the usefulness of investment in the t
 Government departments are often required to exchange information, where frequently, there may be dependencies on the data, impacting day to day operations or decisions being made. Traditional forms of data exchange may carry overheads and the potential for error and miscommunication.
 
 ##Hypothesis
-A MultiChain blockchain can be created to facilitate the sharing of data, and improving security all while reducing error, fraud, and reducing the risks and costs associated with the currently employed means of data sharing. Having access to shared data will allow government departments to more easily conduct day to day operations and make decisions.
+A MultiChain blockchain can be created to facilitate the sharing of data, and improving security all while reducing error, fraud, costs, and the risks associated with the currently employed means of data sharing. Having access to shared data will allow government departments to more easily conduct day to day operations and make decisions.
 
 ##Experiment and research proposed
 Run a Docker MultiChain cluster where each node represents a government department capable of reading and writing data that is made immediately available to other departments.
