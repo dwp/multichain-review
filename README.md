@@ -7,6 +7,17 @@ BY STEVEN BAKHTIARI, MATT SMITH
 ##Summary
 MultiChain, a fork of Bitcoin Core, the reference client for the Bitcoin network, is a permissioned blockchain enabling organisations to quickly configure and run a distributed ledger capable of managing digital and native assets. This experiment aims to determine the possibility of using MultiChain to run a government-maintained interdepartmental ledger that could provide value to multiple departments needing access to the same data.
 
+##Key insights
+MultiChain offers a number of features, making it a platform worthy of consideration.
+
+* Based on open source software, and soon to be released under a GPLv3 licence. It's worth noting that it is still in alpha release.
+* Fully permissioned, offering the ability to deploy a private, fully access controlled ledger. MultiChain allows organisations to easily assign different permissions/rights to nodes that are given access to the blockchain.
+* Doesn't rely on Proof of Work as a security mechanism, and instead provides a means of configuring a round-robin selection to prevent nodes from adding a sequential set of blocks to the chain.
+* Supports atomic transactions between multiple participants using partial transactions.
+* Forked from bitcoin-core, MultiChain provides a JSON-RPC API to interact with nodes, and shares many of the same features as Bitcoin.
+* Enables storage of arbitrary data on the blockchain. 
+* The introduction of blockchain technology will provide value most when there are many actors that need to read and write to the system. One example could be HMRC assigning tax liability, DWP assigning benefit liability and then having those tokens returned to HMRC and the DWP once the liability is fulfilled.
+
 ##Nature of research in this pack
 The insight from this experiment may prove the usefulness of investment in the technology in the medium term, in addition to bigger, wider reaching projects in the long term. It is worth noting that distributed ledger technology is still young, and as such, improvements and new use cases surface regularly.
 
@@ -107,14 +118,3 @@ Because MultiChain provides the ability to include multiple native assets in one
 Unlike one way transactions, which need only be signed by the sender, an atomic transaction must be signed by all participants involved in the exchange. MultiChain does not currently provide a way to communicate partial transactions over the Blockchain, requiring participants to perform this off-chain.
 
 The process is as follows: a transaction is created identifying a set of outputs and inputs (e.g. Alice creates a transactions stating that £10 will be spent and $15 should be received). This is digitally signed, creating a 'partial transaction', which is then transferred to another participant who can then add their own inputs and outputs, before signing the transaction too. Provided all of the inputs and outputs are balanced, the transaction can then be confirmed on the blockchain.
-
-##Key insights
-MultiChain offers a number of features, making it a platform worthy of consideration.
-
-* Based on open source software, and soon to be released under a GPLv3 licence. It's worth noting that it is still in alpha release.
-* Fully permissioned, offering the ability to deploy a private, fully access controlled ledger. MultiChain allows organisations to easily assign different permissions/rights to nodes that are given access to the blockchain.
-* Doesn't rely on Proof of Work as a security mechanism, and instead provides a means of configuring a round-robin selection to prevent nodes from adding a sequential set of blocks to the chain.
-* Supports atomic transactions between multiple participants using partial transactions.
-* Forked from bitcoin-core, MultiChain provides a JSON-RPC API to interact with nodes, and shares many of the same features as Bitcoin.
-* Enables storage of arbitrary data on the blockchain. 
-* The introduction of blockchain technology will provide value most when there are many actors that need to read and write to the system. One example could be HMRC assigning tax liability, DWP assigning benefit liability and then having those tokens returned to HMRC and the DWP once the liability is fulfilled.
