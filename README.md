@@ -74,14 +74,51 @@ In addition to making requests directly to the API, MultiChain provides a comman
 
 ```
 $ docker ps
-$ docker exec -i -t <container-id> bash
+$ docker exec -it <container-id> bash
 root@<container-id>:/# multichain-cli govchain help
 ```
 
-##Findings
+###Testing the permissions system
+While it is possible to deploy MultiChain as a completely open blockchain (it may be configured to allow any node to connect, make payments, receive payments, issue assets, etc), its permissions system allows one to configure roles on a per-address basis.
 
+The provided Docker Composer configuration, when run, starts multiple containers, one for each node. This configuration will be used to prove the utility of the permissions system. However, as MultiChain does not allow the core parameters of a chain to be modified once it has been established, for the purposes of demonstrating to those following along with the provided Docker packages, a new chain should be created. Executing a shell instance on one of the nodes, use the `multichain-util` command to generate the chain:
+
+```
+$ docker exec -it <container-id> bash
+root@<container-id>:/# multichain-util create testchain
+```
+
+A new set of files should have been generated and placed in the directory `/root/.multichain/testchain` containing, amongst other things, some configuration for the chain. Before running the daemon, append the following line to the testchain `multichain.conf` file to override the default port for the JSON-RPC API, then run the daemon:
+
+```
+root@<container-id>:/# echo "rpcport=8012" >> /root/.multichain/testchain/multichain.conf
+root@<container-id>:/# multichaind testchain -daemon
+```
+
+Running the daemon should output some connection information, along with the command needed for other nodes to connect. Executing a shell instance on one of the other nodes, attempt to connect. 
+
+```
+$ docker exec -it <container-id> bash
+root@<container-id>:/# multichaind testchain@<ip>:<port>
+```
+
+The output should indicate that the node attempting to connect does not have the relevant permissions. The output also contains example commands which can be used to set permissions, and includes the relevant address to use when doing so. Returning to the first node, connect permissions may be granted:
+
+```
+root@<container-id>:/# multichain-cli testchain grant <address> connect
+```
+
+Attempting to connect again from the other node should now work as expected. First, the JSON-RPC API port number must be overridden, then the connection can be made:
+
+```
+root@<container-id>:/# echo "rpcport=8013" >> /root/.multichain/testchain/multichain.conf
+root@<container-id>:/# multichaind testchain@<ip>:<port> -daemon
+root@<container-id>:/# multichain-cli testchain getinfo
+```
+
+##Findings
 ###Security and permissions
-MultiChain enables organisations to deploy private, permissioned, fully configurable blockchains. This makes it a solution worthy of consideration when considering a multi-master distributed system to be used by multiple government departments, each managing their own IT infrastructure, with varying budgets, and with different requirements on the data being stored. For instance, some departments may only need occasional read only access for oversight or reporting, while others will need to write. 
+MultiChain enables organisations to deploy private blockchains with fully configurable permissions, making it well suited for use by multiple government departments with requirements to share data, while each managing their own IT infrastructure with varying budgets.
 
 Permissions may be assigned to nodes covering an array of features including:
 
@@ -92,7 +129,7 @@ Permissions may be assigned to nodes covering an array of features including:
 * Mining assets
 * Administering the blockchain
 
-Public-key cryptography is used extensively in crytocurrencies and blockchain implementations to manage identities, and the sending and receiving of data between participants. In addition to this, MultiChain also uses cryptography during the handshake when a node attempts to connect to another, ensuring that any node wishing to participate is both known to others by a public key, and that the node is in possession of the private key associated with the public key.
+Public-key cryptography is used extensively in crytocurrencies to verify identities, particularly when sending and receiving data between participants in a transaction. In addition to this, MultiChain uses the same mechanism during the connection handshake when one node attempts to connect to another, ensuring that any node wishing to participate in the network is both known to others by its public key, and is also in possession of the corresponding private key, which is used to return a digital signature of a challenge message received during the connection attempt. 
 
 Such fine grained permissions simplify the process of defining different rights, or entirely limiting system access to specific actors, while features of the blockchain itself make it suitable for helping government to improve record keeping and the sharing of data across departments. 
 
@@ -100,7 +137,7 @@ In the example scenario described in this research pack, a set of nodes could be
 
 ![](./assets/gov-blockchain.png)
 
-All of these nodes combined would form a single government blockchain with multiple writers and multiple readers interested in the information.
+All of these nodes combined would form a single government blockchain with multiple writers and readers accessing the information.
 
 ###The value of mining on a private blockchain
 In public blockchain implementations, it is necessary to enforce diversity in the pool of nodes responsible for building blocks of transactions and adding them to the chain. There are numerous approaches for doing this, the most common of which, used by the Bitcoin blockchain, is known as Proof of Work (PoW). This works by requiring nodes to solve a cryptographic "puzzle", in simple terms, by repeatedly peforming a hash of the candidate block's contents until the resulting hash meets a given criteria. This process is time consuming, computationally expensive, and consequently, costly in real world terms. It is this process that is typically referred to as mining.
